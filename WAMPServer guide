@@ -1,0 +1,31 @@
+# A Guide to install WAMPServer 
+# Download from WAMPSerer webpage: https://www.wampserver.com/en/ 
+
+# ******* NOTE ******
+# Before continue the installation of WAMPServer
+Install the requirement: Visual C++ Redistributable Packages
+(Get the this from: https://wampserver.aviatechno.net/) 
+
+On WAMPServer webpage:
+Choose WAMPSERVER 64 BITS (x64)
+Then follow the installation setup
+
+---------------------------------
+
+# A guide to use WAMPServer
+# After the installation is completed
+# Create a webpage by using VS Code 
+Go to: C:/wamp64/www
+Create a new folder, example "php". After the folder is created. 
+Then open VS Code: 
+Choose file -> open folder... -> php folder. 
+After opened the php folder, click on "new file" next to php (folder name), for example file.php
+There you write your PHP code.
+
+---------------------------------
+
+# To see the PHP code on a webpage
+Open a webbrowser and enter the source link.
+It should look like: localhost/php/file.php
+(PHP is the folder you created in previous step)
+
