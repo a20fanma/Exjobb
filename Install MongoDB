@@ -1,0 +1,36 @@
+# This is a guide to install MongoDB
+# Download MongoDB Community from MongoDB's webpage: https://www.mongodb.com/try/download/community
+# MongoDB Community is open source and free to use. 
+ ----------------------------------------
+To install MongoDB:
+Choose version: "current-version", platform: Windows x64, package: msi
+Follow the installation.
+
+********** NOTE **************
+Choose: "Install MongoDB as service"
+If the installation setup ask to "install MongoDB Compass", yes, do it!
+Open MongoDB Compass, click on "connect". (MongoDB will connected as localhost)
+******************************
+
+-----------------------------------------
+# The requirements to get MongoDB to work with PHP
+# Using WAMPServer
+# A guide to follow: https://www.php.net/manual/en/mongodb.tutorial.library.php 
+# also: https://www.mongodb.com/docs/php-library/current/tutorial/install-php-library/
+YOU NEED TO INSTALL THE COMPOSER!! ( https://getcomposer.org/ )
+After the Composer is installed. Download PHP-extension from: https://pecl.php.net/package/mongodb/1.13.0/windows (choose your current PHP version)
+Choose "Thread safe (TS) x64"
+
+********** NOTE **************
+If your current PHP version is not listed, you need to change the PHP version from WAMPServer. 
+To do that, you open WAMPServer meny -> PHP -> Version -> choose a version
+which is suitable for the version of the PHP-extension
+******************************
+
+When the PHP-extension for MongoDB are downloaded
+Copie the file and put the file into C:/wamp64/bin/php/php-version/ext
+Then open WAMPServer -> PHP -> php.ini
+There you need to scroll down to texts about "extension", there you add 
+extension=php_monogdb.dll
+After that, open Windows Terminal and write C:\wamp64\www\php> composer require mongodb/mongodb
+This will install the rquired composer into php folder.
