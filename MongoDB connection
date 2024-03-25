@@ -1,0 +1,12 @@
+# How to create an connection to MongoDB by using PHP
+# Are using MongoDB Compass
+
+<?php
+  require_once_DIR_. '/vendor/autoload.php'; // Get this file from Composer
+
+  $client = new MongoDB\Client("mongodb://localhost:27017"); // Connect to MongoDB by localhost
+  $database = $client -> database; // Create a database
+  $result = $database -> createCollection('empcollection'); // Create a MongoDB document
+
+  var_dump($result); // Run MongoDB
+?>
