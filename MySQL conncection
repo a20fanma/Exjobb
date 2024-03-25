@@ -1,0 +1,17 @@
+# How to create an connection to a MySQL database by using PHP
+# Are using PHPMyAdmin, to create a MySQL database
+
+<?php
+  $user = 'root'; // username
+  $password = ''; // leave this out, if no password is set
+  $database = 'test_db'; // database name
+  $port = '3306'; // MySQL is using this port number
+  $mysqli = new mysqli('localhost', $user, $password, $database, $port);
+
+  // Test the connection
+  if(!$mysqli){
+    echo "failed to connect"; // Show this when the connection failed to successed
+  }else{
+    echo "successfully connected!";
+  }
+?>
