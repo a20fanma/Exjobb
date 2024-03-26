@@ -1,0 +1,46 @@
+# A guide how to store images into a database
+# Using MySQL database
+
+---------------------------
+# uploadImage.php
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            Upload images
+        </title>
+    </head>
+    <body>
+        <form method="post" action="upload.php" enctype="multipart/form-data">
+            <input type="file" name="image" /> // Makes an input button to "choose a file"
+            <input type="submit" name="submit" value="upload" /> // Upload the chosen file
+        </form>
+    </body>
+</html>
+
+---------------------------
+# upload.php
+
+<?php
+
+    if(isset($_POST['submit']) && isset($_FILES['image'])){
+        include "MySQLConnection.php"; // Database connection from another php file
+        echo "<pre>";
+        print_r($_FILES['image']); // This will display the uploaded image as an array
+        echo "</pre>";
+
+        // These variables: imageName, imageSize and tmp_name will be displayed in the array
+        $imageName = $_FILES['image']['name'];
+        $imageSize = $_FILES['image']['size'];
+        $tmp_name = $_FILES['image']['tmp_name'];
+
+        // Insert imageName into a variable stored in the database
+        $sql = "INSERT INTO picture_db(imageData) VALUES('$imageName')"; 
+        mysqli_query($mysqli, $sql);
+        header("Location: display.php"); // Display the image in another php file 
+    }else{
+        header("Location: uploadImage.php");
+    }
+?>
