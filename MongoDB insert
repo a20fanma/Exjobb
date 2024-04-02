@@ -1,0 +1,48 @@
+# How to insert data into MongoDB
+# Using VS code and PHP
+
+------------------------------------
+# Insert one document into a collection
+<?php
+
+    // Include MongoDB connection, with created database and collection
+    $collection = (new MongoDB\Client) -> database -> testDocument; 
+
+    // Insert data
+    $insertOneResult = $collection->insertOne([
+        'name' => 'anna',
+        'age' => 15,
+    ]);
+
+    // This will show how many documents was inserted
+    printf("Inserted %d document(s)\n", $insertOneResult->getInsertedCount());
+
+    var_dump($insertOneResult->getInsertedId()); // Show the document(s)
+
+?>
+
+-----------------------------------
+# Insert many documents into a collection
+<?php
+
+    // Include MongoDB connection, with created database and collection
+    $collection = (new MongoDB\Client) -> database -> testDocument; 
+
+    // Insert
+    $insertManyResult = $collection->insertMany([
+        [
+            'name' => 'adam',
+            'age' => 17,
+        ],
+        [
+            'name' => 'david',
+            'age' => 18,
+        ],
+    ]);
+
+    // This will show how many documents was inserted 
+    printf("Inserted %d document(s)\n", $insertManyResult->getInsertedCount());
+
+    var_dump($insertManyResult->getInsertedIds()); // Show the document(s)
+
+?>
