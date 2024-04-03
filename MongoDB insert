@@ -100,4 +100,17 @@ $collection = (new MongoDB\Client) -> database -> testDocument;
        
     }
 
+    // To get and diplay a specifically data stored in a document
+    $document = $collection->findOne([
+        'name' => 'anna',
+    ]);
+    var_dump($document);  
+
+    // To get and display all documents in a collection
+    $document = $collection->find();
+    foreach($document as $id => $value){
+        echo "$id";
+        var_dump($value);
+    }
+
 ?>
