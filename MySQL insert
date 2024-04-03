@@ -1,0 +1,55 @@
+# How to insert data into MySQL
+# Using VS code, PHP and PHPMyAdmin
+
+--------------------NOTE----------------------
+PHPMyAdmin is where MYSQL database is created. 
+----------------------------------------------
+
+-------------------------
+testInsert.php
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            Test page
+        </title>
+    </head>
+    <body>
+        <form method="post" action="testResponseMySQL.php">
+            <input type="text" name="name" />
+            <input type="text" name="age" />
+            <input type="submit" name="submit" value="add" />
+        </form>
+    </body>
+</html>
+
+------------------------
+testResponseMySQL.php
+
+<?php
+
+    // MySQL connection
+    $pdo = new PDO('mysql:dbname=test_db;host=localhost','root','');
+
+    if(isset($_POST['name'])){ // Will check if 'name' has a value
+
+        // Insert into a table
+        $querystring = 'INSERT INTO first_table (name, age) VALUES(:name, :age);';
+        $stmt = $pdo->prepare($querystring);
+        $stmt->bindParam(':name', $_POST['name']); // Bind an attribute with a value
+        $stmt->bindParam(':age', $_POST['age']);
+        $stmt->execute();
+    }
+
+    // Display the inserted data as a table
+    foreach($pdo->query("SELECT * FROM first_table;") as $row){
+        echo "<table>";
+        echo "<tr><th>name</th><th>age</th></tr>";
+        echo "<td>".$row['name']."</td>";
+        echo "<td>".$row['age']."</td>";
+        echo "</table>";
+    }
+
+?>
