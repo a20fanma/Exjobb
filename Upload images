@@ -24,23 +24,33 @@
 # upload.php
 
 <?php
+    $pdo = new PDO('mysql:dbname=test_image_db;host=localhost','root','');
 
-    if(isset($_POST['submit']) && isset($_FILES['image'])){
-        include "MySQLConnection.php"; // Database connection from another php file
-        echo "<pre>";
-        print_r($_FILES['image']); // This will display the uploaded image as an array
-        echo "</pre>";
-
-        // These variables: imageName, imageSize and tmp_name will be displayed in the array
+    if(isset($_POST['submit'])){
         $imageName = $_FILES['image']['name'];
         $imageSize = $_FILES['image']['size'];
         $tmp_name = $_FILES['image']['tmp_name'];
+        $imageFolder = "image/"; // Save the image in a folder
+        $imagePath = $imageFolder . $imageName; 
 
-        // Insert imageName into a variable stored in the database
-        $sql = "INSERT INTO picture_db(imageData) VALUES('$imageName')"; 
-        mysqli_query($mysqli, $sql);
-        header("Location: display.php"); // Display the image in another php file 
+        if(move_uploaded_file($tmp_name, $imagePath)){
+            $querystring = 'INSERT INTO image(imageName, imageData ) VALUES (:imageName, :imageData);';
+            $stmt = $pdo->prepare($querystring);
+            $stmt->bindParam(':imageName', $imageName);
+            $stmt->bindParam(':imageData', $imagePath);
+
+            if($stmt->execute()){
+                // Show this when the image is successfully inserted into the database
+                echo "Image has insert!";  
+            }
+    
+            }else{
+                // Show this when the image failed to insert into the database
+                echo "Errors!"; 
+            }
+
     }else{
-        header("Location: uploadImage.php");
+        header("Location: UploadImage.php");
     }
+    
 ?>
