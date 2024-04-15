@@ -1,0 +1,29 @@
+---------------------------------------------
+How to insert an image into a MySQL database
+---------------------------------------------
+<?php
+
+  $pdo = new PDO('mysql:dbname=images_db;host=localhost','root','');
+
+  if(isset($_POST['submit'])){
+    $imageName = $_FILES['image']['name'];
+    $imageSize = $_FILES['image']['size'];
+    $tmp_name = $_FILES['image']['tmp_name'];
+    $imageData = file_get_contents($tmp_name); // Read image data
+    $imageFolder = "image/"; // Create a folder
+    $imagePath = $imageFolder . $imageName; // Adds imageFolder and imageName to a variable
+
+    if(move_uploaded_file($tmp_name, $imagePath)){ // Move the selected image to the folder
+      $querystring = 'INSERT INTO images(imageName, imageData ) VALUES (:imageName, :imageData);';
+      $stmt = $pdo->prepare($querystring);
+      $stmt->bindParam(':imageName', $imageName);
+      $stmt->bindParam(':imageData', $imageData);
+      $stmt->execute();
+    }
+
+    // When the image has inserted, it will display the image in another PHP file 
+    header("Location: displayMySQL.php");
+  }
+
+?>
+---------------------------------------------
