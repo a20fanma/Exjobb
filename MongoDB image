@@ -1,0 +1,27 @@
+------------------------------------
+How to insert an image into MongoDB
+------------------------------------
+<?php
+    include 'MongoDBConnection.php'; // Database connection
+    // Select which collection to use
+    $collection = (new MongoDB\Client) -> database -> testImageDocument; 
+
+    $imageName = $_FILES['image']['name'];
+    $imageSize = $_FILES['image']['size'];
+    $tmp_name = $_FILES['image']['tmp_name'];
+    $imageData = file_get_contents($_FILES['image']['tmp_name']); // Read image's data
+
+    // JSON-objects, as know as BSON
+    $document = [
+        'imageName' => $imageName,
+        'imageSize' => $imageSize,
+        'imageData' => new MongoDB\BSON\Binary($imageData, MongoDB\BSON\Binary::TYPE_GENERIC), // Convert image's data into binary
+    ];
+
+    if(isset($_POST['submit'])){ // Check if submit has a value
+        $result = $collection->insertOne($document);
+        var_dump($result->getInsertedId());
+    }
+
+?>
+------------------------------------
