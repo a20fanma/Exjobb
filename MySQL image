@@ -27,3 +27,24 @@ How to insert an image into a MySQL database
 
 ?>
 ---------------------------------------------
+Display a radnom image
+---------------------------------------------
+# displayMySQL.php
+
+<?php
+        
+    $pdo = new PDO('mysql:dbname=test_image_db;host=localhost','root','');
+    header('Content-Type: image/jpg');
+
+    foreach($pdo->query("SELECT * FROM image ORDER BY RAND() LIMIT 1;") as $row){ // Generate an image
+        echo $row['imageData'];
+    }
+
+?>
+---------------------------------------------
+Display the image as HTML <img>
+---------------------------------------------
+# displayImageMySQL.php
+
+<img src="displayMySQL.php">
+---------------------------------------------
