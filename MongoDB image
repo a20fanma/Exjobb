@@ -24,4 +24,29 @@ How to insert an image into MongoDB
     }
 
 ?>
+----------------------------------------
+Display an image from a random document
+----------------------------------------
+# displayMongoDB.php
+
+<?php
+
+    include 'MongoDBConnection.php';
+    $collection = (new MongoDB\Client) -> database -> testImageDocument;
+    header('Content-Type: image/jpg');
+ 
+    $document = $collection->aggregate([
+        ['$sample' => ['size' => 1]], // Get a random document
+    ]);
+    foreach ($document as $row){
+        echo $row['imageData']; // Display the image from the document
+    }
+
+?>
+------------------------------------
+Display the image as HTML <img>
+------------------------------------
+# displayImageMongoDB.php
+
+<img src="displayMongoDB.php">
 ------------------------------------
