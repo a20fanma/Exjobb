@@ -1,0 +1,30 @@
+# Using Tampermonkey
+---------------------------
+(function() {
+
+    for(let j = 1; j < 2; j++){
+
+        // Start timer
+        var startTime = performance.timeOrigin + performance.now();
+
+        // Get image button by it's ID
+        document.getElementById("mysqlImage").click();
+
+        // End timer
+        var endTime = performance.timeOrigin + performance.now();
+
+        // Count time between start and end timer
+        var timeResponse = endTime - startTime;
+
+        // Show response time in the console
+        console.log("Response time: " + timeResponse + "ms");
+
+        // Convert response time to text file
+        var data = JSON.stringify(timeResponse, null, "\t");
+        var blob = new Blob([data], {text: "text/plain;charset=utf-8"});
+        saveAs(blob, "data"+j+".text");
+
+    }
+
+})();
+---------------------------
